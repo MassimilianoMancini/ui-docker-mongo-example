@@ -2,6 +2,7 @@ package com.example.school.view.swing;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 
 import javax.swing.DefaultListModel;
 
@@ -15,24 +16,39 @@ import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
+import com.example.school.controller.SchoolController;
 import com.example.school.model.Student;
 
 @RunWith(GUITestRunner.class)
 public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
+
+	@Mock
+	private SchoolController schoolController;
+
+	private AutoCloseable closeable;
 
 	private FrameFixture window;
 	private StudentSwingView studentSwingView;
 
 	@Override
 	protected void onSetUp() {
+		closeable = MockitoAnnotations.openMocks(this);
 		GuiActionRunner.execute(() -> {
 			studentSwingView = new StudentSwingView();
+			studentSwingView.setSchoolController(schoolController);
 			return studentSwingView;
 		});
 
 		window = new FrameFixture(robot(), studentSwingView);
 		window.show();
+	}
+
+	@Override
+	protected void onTearDown() throws Exception {
+		closeable.close();
 	}
 
 	@Test
@@ -128,4 +144,28 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		assertThat(listContents).containsExactly(student2.toString());
 		window.label("errorMessageLabel").requireText(" ");
 	}
+
+	@Test
+	public void testAddButtonShouldDelegateToSchoolControllerNewStudent() {
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test");
+		window.button(JButtonMatcher.withText("Add")).click();
+		verify(schoolController).newStudent(new Student("1", "test"));
+	}
+	
+	@Test
+	public void testDeleteButtonShouldDelegateToSchoolControllerDeleteStudent() {
+		Student student1 = new Student("1", "test1");
+		Student student2 = new Student("2", "test2");
+		
+		GuiActionRunner.execute(()->{
+		    DefaultListModel<Student> listStudentsModel = studentSwingView.getListStudentsModel();
+		    listStudentsModel.addElement(student1);
+		    listStudentsModel.addElement(student2);
+		});
+		window.list("studentList").selectItem(1);
+		window.button(JButtonMatcher.withText("Delete Selected")).click();
+		verify(schoolController).deleteStudent(student2);
+	}
+
 }
