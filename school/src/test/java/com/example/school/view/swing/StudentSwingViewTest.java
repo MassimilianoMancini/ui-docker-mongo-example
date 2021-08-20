@@ -150,22 +150,22 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 
 	@Test
 	public void testAddButtonShouldDelegateToSchoolControllerNewStudent() {
+		window.show();
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
-		window.show();
 		window.button(JButtonMatcher.withText("Add")).click();
 		verify(schoolController).newStudent(new Student("1", "test"));
 	}
-	
+
 	@Test
 	public void testDeleteButtonShouldDelegateToSchoolControllerDeleteStudent() {
 		Student student1 = new Student("1", "test1");
 		Student student2 = new Student("2", "test2");
-		
-		GuiActionRunner.execute(()->{
-		    DefaultListModel<Student> listStudentsModel = studentSwingView.getListStudentsModel();
-		    listStudentsModel.addElement(student1);
-		    listStudentsModel.addElement(student2);
+
+		GuiActionRunner.execute(() -> {
+			DefaultListModel<Student> listStudentsModel = studentSwingView.getListStudentsModel();
+			listStudentsModel.addElement(student1);
+			listStudentsModel.addElement(student2);
 		});
 		window.list("studentList").selectItem(1);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
