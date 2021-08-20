@@ -151,6 +151,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	@Test
 	public void testAddButtonShouldDelegateToSchoolControllerNewStudent() {
 		window.show();
+		window.textBox("idTextBox").focus();
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
