@@ -67,6 +67,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	public void testWhenIdAndNameAreNonEmptyThenAddButtonShouldBeEnabled() {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
+		window.show();
 		window.button(JButtonMatcher.withText("Add")).requireEnabled();
 	}
 
@@ -77,6 +78,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 
 		idTextBox.enterText("1");
 		nameTextBox.enterText(" ");
+		window.show();
 		window.button(JButtonMatcher.withText("Add")).requireDisabled();
 
 		idTextBox.setText("");
@@ -84,6 +86,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 
 		idTextBox.enterText(" ");
 		nameTextBox.enterText("test");
+		window.show();
 		window.button(JButtonMatcher.withText("Add")).requireDisabled();
 
 	}
@@ -149,8 +152,8 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	public void testAddButtonShouldDelegateToSchoolControllerNewStudent() {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
-		window.button(JButtonMatcher.withText("Add")).click();
 		window.show();
+		window.button(JButtonMatcher.withText("Add")).click();
 		verify(schoolController).newStudent(new Student("1", "test"));
 	}
 	
