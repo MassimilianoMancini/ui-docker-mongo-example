@@ -2,7 +2,6 @@ package com.example.school.view.swing;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.swing.timing.Pause.pause;
 
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
@@ -89,9 +88,26 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		Student student2 = new Student("2", "test2");
 		GuiActionRunner.execute(()->studentSwingView.showAllStudents(asList(student1, student2)));
 		window.show();
-		pause(5000);
 		String[] listContents = window.list().contents();
 		assertThat(listContents).containsExactly(student1.toString(), student2.toString());
 		
+	}
+	
+	@Test
+	public void testShowErrorShouldShowTheMessageInTheErrorLabel() {
+		Student student = new Student("1", "test1");
+		GuiActionRunner.execute(()->studentSwingView.showError("error message", student));
+		window.show();
+		window.label("errorMessageLabel").requireText("error message: " + student.toString());
+	}
+	
+	@Test
+	public void testStudentAddedShouldAddTheStudentToTheListNadresetTheErrorLabel() {
+		Student student = new Student("1", "test1");
+		GuiActionRunner.execute(()->studentSwingView.studentAdded(student));
+		String[] listContents = window.list().contents();
+		window.show();
+		assertThat(listContents).containsExactly(student.toString());
+		window.label("errorMessageLabel").requireText(" ");
 	}
 }

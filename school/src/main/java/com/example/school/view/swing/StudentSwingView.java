@@ -23,6 +23,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.example.school.model.Student;
 import com.example.school.view.StudentView;
+import javax.swing.SwingConstants;
+import java.awt.Color;
 
 public class StudentSwingView extends JFrame implements StudentView {
 
@@ -135,7 +137,8 @@ public class StudentSwingView extends JFrame implements StudentView {
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 1;
+		gbc_btnNewButton.gridwidth = 2;
+		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 2;
 		contentPane.add(btnAdd, gbc_btnNewButton);
 
@@ -153,12 +156,6 @@ public class StudentSwingView extends JFrame implements StudentView {
 		listStudents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listStudents.setName("studentList");
 		listStudents.addListSelectionListener(e -> btnDelete.setEnabled(listStudents.getSelectedIndex() != -1));
-		GridBagConstraints gbc_list = new GridBagConstraints();
-		gbc_list.insets = new Insets(0, 0, 5, 0);
-		gbc_list.fill = GridBagConstraints.BOTH;
-		gbc_list.gridwidth = 2;
-		gbc_list.gridx = 0;
-		gbc_list.gridy = 3;
 		scrollPane.setViewportView(listStudents);
 
 		btnDelete = new JButton("Delete Selected");
@@ -169,14 +166,18 @@ public class StudentSwingView extends JFrame implements StudentView {
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_1.gridx = 1;
+		gbc_btnNewButton_1.gridwidth = 2;
+		gbc_btnNewButton_1.gridx = 0;
 		gbc_btnNewButton_1.gridy = 4;
 		contentPane.add(btnDelete, gbc_btnNewButton_1);
 
 		errorMessageLabel = new JLabel(" ");
+		errorMessageLabel.setForeground(Color.RED);
+		errorMessageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		errorMessageLabel.setName("errorMessageLabel");
 		GridBagConstraints gbc_errorMessageLabel = new GridBagConstraints();
-		gbc_errorMessageLabel.gridx = 1;
+		gbc_errorMessageLabel.gridwidth = 2;
+		gbc_errorMessageLabel.gridx = 0;
 		gbc_errorMessageLabel.gridy = 5;
 		contentPane.add(errorMessageLabel, gbc_errorMessageLabel);
 	}
@@ -193,13 +194,14 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 	@Override
 	public void studentAdded(Student student) {
-		// TODO Auto-generated method stub
+		listStudentsModel.addElement(student);
+		resetErrorLabel();
 
 	}
 
 	@Override
 	public void showError(String message, Student student) {
-		// TODO Auto-generated method stub
+		errorMessageLabel.setText(message + ": " + student.toString());
 
 	}
 
@@ -207,6 +209,11 @@ public class StudentSwingView extends JFrame implements StudentView {
 	public void studentRemoved(Student student) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	private void resetErrorLabel() {
+		errorMessageLabel.setText(" ");
+		
 	}
 
 }
