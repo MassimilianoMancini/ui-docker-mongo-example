@@ -200,20 +200,20 @@ public class StudentSwingView extends JFrame implements StudentView {
 	}
 
 	@Override
+	public void studentRemoved(Student student) {
+		listStudentsModel.removeElement(student);
+		resetErrorLabel();
+	}
+
+	@Override
 	public void showError(String message, Student student) {
 		errorMessageLabel.setText(message + ": " + student.toString());
 
 	}
 
-	@Override
-	public void studentRemoved(Student student) {
-		// TODO Auto-generated method stub
-
-	}
-	
 	private void resetErrorLabel() {
 		errorMessageLabel.setText(" ");
-		
+
 	}
 
 }
