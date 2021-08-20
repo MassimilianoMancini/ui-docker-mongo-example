@@ -38,7 +38,9 @@ public class StudentSwingView extends JFrame {
 	KeyAdapter btnAddEnabler = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e ) {
-			btnAdd.setEnabled(!txtId.getText().isEmpty() && !txtName.getText().isEmpty());
+			btnAdd.setEnabled(
+			  !txtId.getText().trim().isEmpty() 
+			  && !txtName.getText().trim().isEmpty());
 		}
 	};
 
