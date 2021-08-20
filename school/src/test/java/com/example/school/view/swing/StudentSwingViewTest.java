@@ -150,6 +150,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
+		window.show();
 		verify(schoolController).newStudent(new Student("1", "test"));
 	}
 	
