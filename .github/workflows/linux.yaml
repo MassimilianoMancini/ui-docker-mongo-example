@@ -12,10 +12,6 @@ jobs:
           matrix:
             include:
               - java: 11
-                additional-maven-args: >
-                  -Pcoveralls
-                  -DrepoToken=$COVERALLS_REPO_TOKEN
-                  -DpullRequest=${{ github.event.pull_request.number }}
               - java: 15
         
         name: Build with Java ${{ matrix.java }}
@@ -32,7 +28,5 @@ jobs:
             key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml, **/*.yaml') }}
             restore-keys: ${{ runner.os }}-m2-
         - name: Build with Maven
-          run: xvfb-run mvn verify ${{ matrix.additional-maven-args }}
+          run: xvfb-run mvn verify
           working-directory: school
-          env:
-            COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
