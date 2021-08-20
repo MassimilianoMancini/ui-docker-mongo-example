@@ -4,21 +4,22 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 import com.example.school.model.Student;
-
-import javax.swing.JList;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class StudentSwingView extends JFrame {
 
@@ -31,7 +32,9 @@ public class StudentSwingView extends JFrame {
 	private JLabel lblNewLabel;
 	private JTextField txtName;
 	private JButton btnAdd;
-	private JList<Student> list;
+	private JList<Student> listStudents;
+	private DefaultListModel<Student> listStudentsModel;
+
 	private JButton btnDelete;
 	private JLabel errorMessageLabel;
 	
@@ -43,6 +46,10 @@ public class StudentSwingView extends JFrame {
 			  && !txtName.getText().trim().isEmpty());
 		}
 	};
+
+	DefaultListModel<Student> getListStudentsModel() {
+		return listStudentsModel;
+	}
 
 	/**
 	 * Launch the application.
@@ -130,15 +137,19 @@ public class StudentSwingView extends JFrame {
 		gbc_btnNewButton.gridy = 2;
 		contentPane.add(btnAdd, gbc_btnNewButton);
 		
-		list = new JList<Student>();
-		list.setName("studentList");
+		listStudentsModel = new DefaultListModel<>();
+		listStudents = new JList<>(listStudentsModel);
+		listStudents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listStudents.setName("studentList");
+		listStudents.addListSelectionListener(
+		  e -> btnDelete.setEnabled(listStudents.getSelectedIndex() != -1));
 		GridBagConstraints gbc_list = new GridBagConstraints();
 		gbc_list.insets = new Insets(0, 0, 5, 0);
 		gbc_list.fill = GridBagConstraints.BOTH;
 		gbc_list.gridwidth = 2;
 		gbc_list.gridx = 0;
 		gbc_list.gridy = 3;
-		contentPane.add(list, gbc_list);
+		contentPane.add(listStudents, gbc_list);
 		
 		btnDelete = new JButton("Delete Selected");
 		btnDelete.setEnabled(false);
@@ -158,6 +169,11 @@ public class StudentSwingView extends JFrame {
 		gbc_errorMessageLabel.gridx = 1;
 		gbc_errorMessageLabel.gridy = 5;
 		contentPane.add(errorMessageLabel, gbc_errorMessageLabel);
+	}
+
+	public void getListStudentModel() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
