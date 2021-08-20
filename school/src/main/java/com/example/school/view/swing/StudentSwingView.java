@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class StudentSwingView extends JFrame {
 
@@ -27,11 +29,18 @@ public class StudentSwingView extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtId;
 	private JLabel lblNewLabel;
-	private JTextField textField;
-	private JButton btnNewButton;
+	private JTextField txtName;
+	private JButton btnAdd;
 	private JList<Student> list;
-	private JButton btnNewButton_1;
+	private JButton btnDelete;
 	private JLabel errorMessageLabel;
+	
+	KeyAdapter btnAddEnabler = new KeyAdapter() {
+		@Override
+		public void keyReleased(KeyEvent e ) {
+			btnAdd.setEnabled(!txtId.getText().isEmpty() && !txtName.getText().isEmpty());
+		}
+	};
 
 	/**
 	 * Launch the application.
@@ -77,6 +86,7 @@ public class StudentSwingView extends JFrame {
 		contentPane.add(lblId, gbc_lblId);
 		
 		txtId = new JTextField();
+		txtId.addKeyListener(btnAddEnabler);
 		txtId.setName("idTextBox");
 		GridBagConstraints gbc_txtId = new GridBagConstraints();
 		gbc_txtId.anchor = GridBagConstraints.NORTH;
@@ -95,19 +105,20 @@ public class StudentSwingView extends JFrame {
 		gbc_lblNewLabel.gridy = 1;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setName("nameTextBox");
+		txtName = new JTextField();
+		txtName.addKeyListener(btnAddEnabler);
+		txtName.setName("nameTextBox");
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 0);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 1;
-		contentPane.add(textField, gbc_textField);
-		textField.setColumns(10);
+		contentPane.add(txtName, gbc_textField);
+		txtName.setColumns(10);
 		
-		btnNewButton = new JButton("Add");
-		btnNewButton.setEnabled(false);
-		btnNewButton.addActionListener(new ActionListener() {
+		btnAdd = new JButton("Add");
+		btnAdd.setEnabled(false);
+		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -115,7 +126,7 @@ public class StudentSwingView extends JFrame {
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 2;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
+		contentPane.add(btnAdd, gbc_btnNewButton);
 		
 		list = new JList<Student>();
 		list.setName("studentList");
@@ -127,9 +138,9 @@ public class StudentSwingView extends JFrame {
 		gbc_list.gridy = 3;
 		contentPane.add(list, gbc_list);
 		
-		btnNewButton_1 = new JButton("Delete Selected");
-		btnNewButton_1.setEnabled(false);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnDelete = new JButton("Delete Selected");
+		btnDelete.setEnabled(false);
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
@@ -137,7 +148,7 @@ public class StudentSwingView extends JFrame {
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_1.gridx = 1;
 		gbc_btnNewButton_1.gridy = 4;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		contentPane.add(btnDelete, gbc_btnNewButton_1);
 		
 		errorMessageLabel = new JLabel(" ");
 		errorMessageLabel.setName("errorMessageLabel");
@@ -146,5 +157,7 @@ public class StudentSwingView extends JFrame {
 		gbc_errorMessageLabel.gridy = 5;
 		contentPane.add(errorMessageLabel, gbc_errorMessageLabel);
 	}
+	
+	
 
 }

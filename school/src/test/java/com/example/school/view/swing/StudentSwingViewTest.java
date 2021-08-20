@@ -38,4 +38,11 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.button(JButtonMatcher.withText("Delete Selected")).requireDisabled();
 		window.label("errorMessageLabel").requireText(" ");
 	}
+	
+	@Test
+	public void testWhenIdAndNameAreNonEmptyThenAddButtonShouldBeEnabled() {
+		window.textBox("idTextBox").enterText("1");
+		window.textBox("nameTextBox").enterText("test");
+		window.button(JButtonMatcher.withText("Add")).requireEnabled();
+	}
 }
