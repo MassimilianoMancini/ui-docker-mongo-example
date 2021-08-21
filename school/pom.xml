@@ -16,6 +16,7 @@
     <testcontainers.version>1.16.0</testcontainers.version>
     <jupiter.version>5.7.2</jupiter.version>
     <mockito.version>3.11.2</mockito.version>
+    <dockerHost>http://localhost:2375</dockerHost>
   </properties>
 
   <dependencies>
