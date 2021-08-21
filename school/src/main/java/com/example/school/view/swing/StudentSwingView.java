@@ -30,7 +30,7 @@ public class StudentSwingView extends JFrame implements StudentView {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8713210426347534192L;
+	private static final long serialVersionUID = -1L;
 	private JPanel contentPane;
 	private JTextField txtId;
 	private JLabel lblNewLabel;
@@ -76,8 +76,6 @@ public class StudentSwingView extends JFrame implements StudentView {
 	 * Create the frame.
 	 */
 	public StudentSwingView() {
-		setAutoRequestFocus(false);
-		setAlwaysOnTop(true);
 		setTitle("Student View");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
