@@ -26,10 +26,5 @@
 			<type>1</type>
 			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/linux.yaml</location>
 		</link>
-		<link>
-			<name>windows-mac.yaml</name>
-			<type>1</type>
-			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/windows-mac.yaml</location>
-		</link>
 	</linkedResources>
 </projectDescription>

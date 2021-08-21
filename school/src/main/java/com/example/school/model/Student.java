@@ -1,5 +1,8 @@
 package com.example.school.model;
 
+import com.example.school.Generated;
+
+@Generated
 public class Student {
 	private String id;
 	private String name;

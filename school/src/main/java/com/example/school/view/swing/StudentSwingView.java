@@ -21,6 +21,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.example.school.Generated;
 import com.example.school.controller.SchoolController;
 import com.example.school.model.Student;
 import com.example.school.view.StudentView;
@@ -44,7 +45,6 @@ public class StudentSwingView extends JFrame implements StudentView {
 	private JLabel errorMessageLabel;
 	private SchoolController schoolController;
 
-
 	KeyAdapter btnAddEnabler = new KeyAdapter() {
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -56,25 +56,23 @@ public class StudentSwingView extends JFrame implements StudentView {
 		return listStudentsModel;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StudentSwingView frame = new StudentSwingView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	static Runnable runnable = new Runnable() {
+		@Generated
+		public void run() {
+			try {
+				StudentSwingView frame = new StudentSwingView();
+				frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		});
+		}
+	};
+
+	@Generated
+	public static void main(String[] args) {
+		EventQueue.invokeLater(runnable);
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public StudentSwingView() {
 		setTitle("Student View");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,8 +128,7 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 		btnAdd = new JButton("Add");
 		btnAdd.setEnabled(false);
-		btnAdd.addActionListener(
-		  e -> schoolController.newStudent(new Student(txtId.getText(), txtName.getText())));
+		btnAdd.addActionListener(e -> schoolController.newStudent(new Student(txtId.getText(), txtName.getText())));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridwidth = 2;
@@ -157,8 +154,7 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 		btnDelete = new JButton("Delete Selected");
 		btnDelete.setEnabled(false);
-		btnDelete.addActionListener(
-			e -> schoolController.deleteStudent(listStudents.getSelectedValue()));
+		btnDelete.addActionListener(e -> schoolController.deleteStudent(listStudents.getSelectedValue()));
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_1.gridwidth = 2;
@@ -175,11 +171,6 @@ public class StudentSwingView extends JFrame implements StudentView {
 		gbc_errorMessageLabel.gridx = 0;
 		gbc_errorMessageLabel.gridy = 5;
 		contentPane.add(errorMessageLabel, gbc_errorMessageLabel);
-	}
-
-	public DefaultListModel<Student> getListStudentModel() {
-		return listStudentsModel;
-
 	}
 
 	@Override
