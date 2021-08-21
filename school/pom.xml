@@ -122,6 +122,31 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.1.2</version>
         </plugin>
+        <plugin>
+          <groupId>org.eluder.coveralls</groupId>
+          <artifactId>coveralls-maven-plugin</artifactId>
+          <version>4.3.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>javax.xml.bind</groupId>
+              <artifactId>jaxb-api</artifactId>
+              <version>2.3.1</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.7</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -195,32 +220,6 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.eluder.coveralls</groupId>
-        <artifactId>coveralls-maven-plugin</artifactId>
-        <version>4.3.0</version>
-        <dependencies>
-          <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.3.1</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.7</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
     </plugins>
   </build>
   <profiles>
@@ -243,17 +242,6 @@
                 </goals>
               </execution>
             </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>jacoco</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
           </plugin>
         </plugins>
       </build>
