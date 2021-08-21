@@ -11,7 +11,7 @@ jobs:
           matrix:
             java: [ 11, 15 ]
         
-        name: Build with Java ${{ matrix.java }} on ${{ runner.os }}
+        name: Build with Java ${{ matrix.java }} on ubuntu-latest
         steps:
         - uses: actions/checkout@v2
         - name: Set up JDK 11
