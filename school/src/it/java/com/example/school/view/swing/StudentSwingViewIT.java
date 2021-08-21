@@ -7,10 +7,12 @@ import java.net.InetSocketAddress;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
+import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.example.school.controller.SchoolController;
 import com.example.school.model.Student;
@@ -21,6 +23,7 @@ import com.mongodb.ServerAddress;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
 
+@RunWith(GUITestRunner.class)
 public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 	private static MongoServer server;
 	private static InetSocketAddress serverAddress;
