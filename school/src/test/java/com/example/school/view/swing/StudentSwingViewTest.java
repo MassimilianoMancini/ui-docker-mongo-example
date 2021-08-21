@@ -75,10 +75,8 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	public void testWhenEitherIdOrNameAreBlankThenAddButtonShouldBeDisabled() {
 		JTextComponentFixture idTextBox = window.textBox("idTextBox");
 		JTextComponentFixture nameTextBox = window.textBox("nameTextBox");
-
 		idTextBox.enterText("1");
 		nameTextBox.enterText(" ");
-		window.show();
 		window.button(JButtonMatcher.withText("Add")).requireDisabled();
 
 		idTextBox.setText("");
@@ -86,7 +84,6 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 
 		idTextBox.enterText(" ");
 		nameTextBox.enterText("test");
-		window.show();
 		window.button(JButtonMatcher.withText("Add")).requireDisabled();
 
 	}
@@ -150,8 +147,6 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 
 	@Test
 	public void testAddButtonShouldDelegateToSchoolControllerNewStudent() {
-		window.show();
-		window.textBox("idTextBox").focus();
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
