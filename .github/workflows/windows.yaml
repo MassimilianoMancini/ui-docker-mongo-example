@@ -32,7 +32,7 @@ jobs:
             sc config docker
             binpath="docker.exe --run-service -H tcp://localhost:2375"
         - name: Docker restart
-          run: restar-service *docker*
+          run: restart-service *docker*
         - name: Docker info
           run: docker info
         - name: Build with Maven
