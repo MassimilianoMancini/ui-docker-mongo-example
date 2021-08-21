@@ -1,4 +1,4 @@
-name: Integration tests
+name: Integration tests and Coveralls with build matrix
 
 on:
     push:
@@ -6,7 +6,7 @@ on:
     
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: ${{ matrix.os }}
         strategy:
           matrix:
             os: [ ubuntu-latest, macos-latest, windows-latest ]

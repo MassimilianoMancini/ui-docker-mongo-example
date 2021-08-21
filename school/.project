@@ -22,7 +22,7 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>linux.yaml</name>
+			<name>matrix.yaml</name>
 			<type>1</type>
 			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/linux.yaml</location>
 		</link>
