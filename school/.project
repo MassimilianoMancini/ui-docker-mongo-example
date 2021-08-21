@@ -34,7 +34,7 @@
 		<link>
 			<name>windows.yaml</name>
 			<type>1</type>
-			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/windows-mac.yaml</location>
+			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/windows.yaml</location>
 		</link>
 	</linkedResources>
 </projectDescription>
