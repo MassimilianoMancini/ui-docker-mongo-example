@@ -7,8 +7,7 @@ on:
 jobs:
     build:
         runs-on: windows-latest
-        env: 
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+        env:
           DOCKER_HOST: tcp://localhost:2375
         strategy:
           matrix:
@@ -36,10 +35,6 @@ jobs:
         - name: Docker info
           run: docker info
         - name: Build with Maven
-          run: >
-            mvn -f pom-win.xml verify 
-            -Pcoveralls 
-            -DrepoToken=$COVERALLS_REPO_TOKEN 
-            -DpullRequest=${{ github.event.pull_request.number }}
+          run: mvn -f pom-win.xml verify 
           working-directory: school
       
