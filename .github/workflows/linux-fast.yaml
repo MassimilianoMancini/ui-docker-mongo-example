@@ -2,11 +2,11 @@ name: Fast linux CI
 
 on:
     push:
-      tags-ignore:
-        - v*
+      tags:
+        - !v*
     pull_request:
-      tags-ignore:
-        - v*
+      tags:
+        - !v*
     
 jobs:
     build:
