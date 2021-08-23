@@ -1,10 +1,5 @@
 package com.example.school.controller;
 
-/**
-2 * Communicates with a MongoDB server on localhost; start MongoDB with Docker with
-3 * docker run -p 27017:27017 --rm mongo:4.4.3
-4 */
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
@@ -25,6 +20,7 @@ import com.example.school.repository.mongo.StudentMongoRepository;
 import com.example.school.view.StudentView;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoWriteException;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
@@ -39,10 +35,11 @@ public class SchoolControllerRaceConditionIT {
 	private StudentView studentView;
 
 	private StudentRepository studentRepository;
+	private static int mongoPort = Integer.parseInt(System.getProperty("mongo.port", "27017"));
 
 	@BeforeEach
 	void setUp() {
-		MongoClient client = new MongoClient("localhost");
+		MongoClient client = new MongoClient(new ServerAddress("localhost", mongoPort));
 		MongoDatabase database = client.getDatabase("school");
 		database.drop();
 		MongoCollection<Document> studentCollection = database.getCollection("student");
