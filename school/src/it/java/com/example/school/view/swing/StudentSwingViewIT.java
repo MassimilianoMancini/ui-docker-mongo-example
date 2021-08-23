@@ -1,14 +1,19 @@
 package com.example.school.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.swing.timing.Pause.pause;
+import static org.assertj.swing.timing.Timeout.timeout;
+import static org.awaitility.Awaitility.await;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
 
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
+import org.assertj.swing.timing.Condition;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,6 +38,8 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 	private StudentSwingView studentSwingView;
 	private SchoolController schoolController;
 	private StudentMongoRepository studentRepository;
+	
+	private static final long TIMEOUT = 5000;
 
 	@BeforeClass
 	public static void setupServer() {
@@ -87,7 +94,9 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
-		assertThat(window.list().contents()).containsExactly(new Student("1", "test").toString());
+		await().atMost(5, TimeUnit.SECONDS).untilAsserted(()->
+			assertThat(window.list().contents()).containsExactly(new Student("1", "test").toString())
+		);
 	}
 	
 	@Test
@@ -96,6 +105,16 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
+		
+		pause(
+			new Condition("Error label to contain text") {
+				@Override
+				public boolean test() {
+					return !window.label("errorMessageLabel").text().trim().isEmpty();
+				}
+			}
+			, timeout(TIMEOUT));
+		
 		assertThat(window.list().contents()).isEmpty();
 		window.label("errorMessageLabel")
 			.requireText("Already existing student with id 1: " + (new Student("1", "existing")).toString());
@@ -107,7 +126,9 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(()->schoolController.newStudent(new Student("1", "toremove")));
 		window.list().selectItem(0);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
-		assertThat(window.list().contents()).isEmpty();
+		await().atMost(5, TimeUnit.SECONDS).untilAsserted(()->
+			assertThat(window.list().contents()).isEmpty()
+		);
 	}
 	
 	@Test
@@ -117,9 +138,10 @@ public class StudentSwingViewIT extends AssertJSwingJUnitTestCase {
 		GuiActionRunner.execute(()->studentSwingView.getListStudentsModel().addElement(student));
 		window.list().selectItem(0);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
+		await().atMost(5,  TimeUnit.SECONDS).untilAsserted(()->
+			window.label("errorMessageLabel").requireText("No existing student with id 1: " + student.toString())
+		);
 		assertThat(window.list().contents()).containsExactly(student.toString());
-		window.label("errorMessageLabel").requireText("No existing student with id 1: " + student.toString());
-		
 	}
 
 }

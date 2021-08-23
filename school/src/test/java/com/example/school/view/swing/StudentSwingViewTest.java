@@ -2,6 +2,7 @@ package com.example.school.view.swing;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 import javax.swing.DefaultListModel;
@@ -32,6 +33,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 
 	private FrameFixture window;
 	private StudentSwingView studentSwingView;
+	private static final int TIMEOUT = 5000;
 
 	@Override
 	protected void onSetUp() {
@@ -112,14 +114,14 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 	@Test
 	public void testShowErrorShouldShowTheMessageInTheErrorLabel() {
 		Student student = new Student("1", "test1");
-		GuiActionRunner.execute(() -> studentSwingView.showError("error message", student));
+		studentSwingView.showError("error message", student);
 		window.label("errorMessageLabel").requireText("error message: " + student.toString());
 	}
 
 	@Test
-	public void testStudentAddedShouldAddTheStudentToTheListNadresetTheErrorLabel() {
+	public void testStudentAddedShouldAddTheStudentToTheListAndResetTheErrorLabel() {
 		Student student = new Student("1", "test1");
-		GuiActionRunner.execute(() -> studentSwingView.studentAdded(student));
+		studentSwingView.studentAdded(student);
 		String[] listContents = window.list().contents();
 		assertThat(listContents).containsExactly(student.toString());
 		window.label("errorMessageLabel").requireText(" ");
@@ -150,7 +152,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		window.textBox("idTextBox").enterText("1");
 		window.textBox("nameTextBox").enterText("test");
 		window.button(JButtonMatcher.withText("Add")).click();
-		verify(schoolController).newStudent(new Student("1", "test"));
+		verify(schoolController, timeout(TIMEOUT)).newStudent(new Student("1", "test"));
 	}
 
 	@Test
@@ -165,7 +167,7 @@ public class StudentSwingViewTest extends AssertJSwingJUnitTestCase {
 		});
 		window.list("studentList").selectItem(1);
 		window.button(JButtonMatcher.withText("Delete Selected")).click();
-		verify(schoolController).deleteStudent(student2);
+		verify(schoolController, timeout(TIMEOUT)).deleteStudent(student2);
 	}
 
 }

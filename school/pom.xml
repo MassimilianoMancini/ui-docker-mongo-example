@@ -16,7 +16,6 @@
     <testcontainers.version>1.16.0</testcontainers.version>
     <jupiter.version>5.7.2</jupiter.version>
     <mockito.version>3.11.2</mockito.version>
-    <dockerHost>http://localhost:2375</dockerHost>
   </properties>
 
   <dependencies>
@@ -80,6 +79,12 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>mongodb</artifactId>
       <version>${testcontainers.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <version>4.1.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

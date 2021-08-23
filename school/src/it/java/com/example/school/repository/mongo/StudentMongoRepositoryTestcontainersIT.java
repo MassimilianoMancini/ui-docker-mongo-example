@@ -52,7 +52,7 @@ class StudentMongoRepositoryTestcontainersIT {
 	}
 
 	@Test
-	void tistFindAllWhenDatabaseIsNotEmpty() {
+	void testFindAllWhenDatabaseIsNotEmpty() {
 		addTestStudentToDatabase("1", "test1");
 		addTestStudentToDatabase("2", "test2");
 		assertThat(studentRepository.findAll()).containsExactly(new Student("1", "test1"), new Student("2", "test2"));

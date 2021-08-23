@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.example.school.Generated;
@@ -128,7 +129,14 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 		btnAdd = new JButton("Add");
 		btnAdd.setEnabled(false);
-		btnAdd.addActionListener(e -> schoolController.newStudent(new Student(txtId.getText(), txtName.getText())));
+		btnAdd.addActionListener(
+			e -> new Thread(()-> {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {}
+				schoolController.newStudent(new Student(txtId.getText(), txtName.getText()));
+			}).start()
+		);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridwidth = 2;
@@ -154,7 +162,14 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 		btnDelete = new JButton("Delete Selected");
 		btnDelete.setEnabled(false);
-		btnDelete.addActionListener(e -> schoolController.deleteStudent(listStudents.getSelectedValue()));
+		btnDelete.addActionListener(
+			e -> new Thread(()->{
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {}
+				schoolController.deleteStudent(listStudents.getSelectedValue());
+			}).start()
+		);
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton_1.gridwidth = 2;
@@ -180,21 +195,23 @@ public class StudentSwingView extends JFrame implements StudentView {
 
 	@Override
 	public void studentAdded(Student student) {
-		listStudentsModel.addElement(student);
-		resetErrorLabel();
-
+		SwingUtilities.invokeLater(()->{
+			listStudentsModel.addElement(student);
+			resetErrorLabel();
+		});
 	}
 
 	@Override
 	public void studentRemoved(Student student) {
-		listStudentsModel.removeElement(student);
-		resetErrorLabel();
+		SwingUtilities.invokeLater(()->{
+			listStudentsModel.removeElement(student);
+			resetErrorLabel();
+		});
 	}
 
 	@Override
 	public void showError(String message, Student student) {
-		errorMessageLabel.setText(message + ": " + student.toString());
-
+		SwingUtilities.invokeLater(()->errorMessageLabel.setText(message + ": " + student.toString()));
 	}
 
 	private void resetErrorLabel() {

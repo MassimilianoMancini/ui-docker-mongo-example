@@ -20,26 +20,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>linux.yaml</name>
-			<type>1</type>
-			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/linux.yaml</location>
-		</link>
-		<link>
-			<name>mac.yaml</name>
-			<type>1</type>
-			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/mac.yaml</location>
-		</link>
-		<link>
-			<name>pom-win.xml</name>
-			<type>1</type>
-			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/school/pom-win.xml</location>
-		</link>
-		<link>
-			<name>windows.yaml</name>
-			<type>1</type>
-			<location>C:/Users/massi/Documents/unifi/apt/projects/ui-docker-mongo-example/.github/workflows/windows.yaml</location>
-		</link>
-	</linkedResources>
 </projectDescription>
