@@ -58,5 +58,4 @@ class SchoolControllerIT {
 		verify(studentView).studentRemoved(studentToDelete);
 
 	}
-
 }
