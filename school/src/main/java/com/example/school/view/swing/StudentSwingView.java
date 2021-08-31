@@ -163,7 +163,8 @@ public class StudentSwingView extends JFrame implements StudentView {
 		btnDelete = new JButton("Delete Selected");
 		btnDelete.setEnabled(false);
 		btnDelete.addActionListener(
-			e -> new Thread(()->{
+			e -> new Thread(()->
+			{
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) {}
